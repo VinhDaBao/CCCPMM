@@ -10,3 +10,57 @@ img {
   max-width: 100%;
   display: block;
 }
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+@keyframes shimmer {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    #ff0000,
+    #ff9900,
+    #ff0000
+  );
+
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+
+  animation: shimmer 2s linear infinite;
+}
+@keyframes shimmerBlue {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.shimmer-blue {
+  background: linear-gradient(
+    90deg,
+    #1e3a8a,
+    #3b82f6,
+    #1e3a8a
+  );
+
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+
+  animation: shimmerBlue 2.5s linear infinite;
+}

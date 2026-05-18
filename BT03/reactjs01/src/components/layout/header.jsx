@@ -83,12 +83,14 @@ const Header = () => {
   ];
 
   return (
+    <div style = {{ marginBottom: '20px' }}>
     <Menu
       onClick={onClick}
       selectedKeys={[current]}
       mode="horizontal"
       items={items}
     />
+    </div>
   );
 };
 
