@@ -1,16 +1,36 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import {useDispatch} from "react-redux";
+import { setCart } from "../redux/cartSlice";
+
 import axios from "axios";
 import { getProductDetailApi } from "../util/api";
 import { Swiper, SwiperSlide } from "swiper/react";
-
+import { message } from "antd";
 import "swiper/css";
+import { addToCartApi } from "../util/api";
 const ProductDetailPage = () => {
+
 
     const [product, setProduct] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const [loading, setLoading] = useState(true);
     const { id } = useParams();
+    const dispatch = useDispatch();
+    const handleAddToCart = async () => {
+  try {
+
+    const res = await addToCartApi(product._id, quantity);
+    dispatch(setCart(res.cart));
+    message.success("Đã thêm vào giỏ hàng");
+
+  } catch (err) {
+
+    message.error("Thêm vào giỏ hàng thất bại");
+
+    console.log(err.response?.data || err.message);
+  }
+}
     useEffect(() => {
         fetchDetail();
     }, []);
@@ -83,7 +103,6 @@ const ProductDetailPage = () => {
                     </span>
                 </div>
 
-                {/* CATEGORY */}
                 <div className="text-sm">
                     🏷 Danh mục:{" "}
                     <span className="font-medium">
@@ -91,7 +110,6 @@ const ProductDetailPage = () => {
                     </span>
                 </div>
 
-                {/* QUANTITY CONTROL */}
                 <div className="flex items-center gap-3 mt-3">
                     <button
                         className="w-10 px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition" onClick={() =>
@@ -114,9 +132,9 @@ const ProductDetailPage = () => {
                     >
                         +
                     </button>
+
                 </div>
 
-                {/* TOTAL PRICE */}
                 <div className="mt-2 text-lg">
                     Tổng tiền:{" "}
                     <span className="font-bold text-green-600">
@@ -124,9 +142,10 @@ const ProductDetailPage = () => {
                     </span>
                 </div>
 
-                {/* BUTTONS */}
                 <div className="flex gap-4 mt-5">
-                    <button className="bg-black text-white px-6 py-3 rounded-lg hover:opacity-80">
+                    <button className="bg-black text-white px-6 py-3 rounded-lg hover:opacity-80" 
+                    
+                    onClick={handleAddToCart}>
                         Thêm vào giỏ hàng
                     </button>
 

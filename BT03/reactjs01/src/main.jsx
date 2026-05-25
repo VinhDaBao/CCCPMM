@@ -14,8 +14,11 @@ import UserPage from './pages/user.jsx';
 import HomePage from './pages/home.jsx';
 import LoginPage from './pages/login.jsx';
 import ProductDetailPage from './pages/productDetail.jsx';
+import CartPage from './pages/cart.jsx';
+import MyOrdersPage from './pages/order.jsx';
 import { AuthWrapper } from './components/context/auth.context.jsx';
-
+import CheckoutPage from './pages/checkout.jsx';
+import PaymentResultPage from './pages/paymentResult.jsx';
 const router = createBrowserRouter([
 {
 path: "/",
@@ -40,6 +43,22 @@ element: <UserPage />
 {
 path: "/product/:id",
 element: <ProductDetailPage />
+},
+{
+  path: "/cart",
+  element: <CartPage />
+},
+{
+  path: "/checkout",
+  element: <CheckoutPage />
+},
+{
+  path:"/my-orders",
+  element: <MyOrdersPage />
+} ,
+{
+  path: "/payment-result",
+  element: <PaymentResultPage />
 }
 ]
 }

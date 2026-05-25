@@ -7,7 +7,8 @@ import { useEffect } from "react";
 import { Spin } from "antd";
 
 import { Outlet } from "react-router-dom";
-
+import { setCart } from "./redux/cartSlice";
+import { getCartApi } from "./util/api";
 import {
   useDispatch,
   useSelector
@@ -18,7 +19,6 @@ import {
 } from "./redux/authSlice";
 
 function App() {
-
   const dispatch = useDispatch();
 
   const auth = useSelector(
@@ -63,6 +63,21 @@ function App() {
 
   }, [dispatch]);
 
+  useEffect(() => {
+    const fetchCart = async () => {
+      try {
+        const res = await getCartApi();
+        console.log("FETCH CART RESPONSE:", res);
+        if (res.success) {
+          dispatch(setCart(res.cart));
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchCart();
+  }, []);
   return (<div> {auth.loading ? <div style={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}> <Spin /> </div> : <>
   <Header />
   <main className="pt-6 bg-gray-50 min-h-screen">

@@ -68,6 +68,64 @@ export const getMostViewedApi =
         );
 
     };
+export const addToCartApi = (productId, quantity = 1) => {
+  return axios.post("/api/cart/add", {
+    productId,
+    quantity,
+  });
+};
+export const getCartApi = () => {
+  return axios.get("/api/cart");
+};
+
+
+export const removeCartItemApi = (productId) => {
+  return axios.delete(`/api/cart/item`,{
+    data:
+    {
+    productId: productId
+    }
+  });
+};
+
+export const updateCartItemApi = (productId, quantity) => {
+  return axios.put("/api/cart/update", {
+    productId,
+    quantity,
+  });
+};
+export const getMyOrdersApi = () => {
+  return axios.get("/api/order/my-orders");
+};
+
+export const createOrderApi = async (data) => {
+
+  return await axios.post(
+    "/api/order/create",data
+  );
+
+};
+
+export const cancelOrderApi = async (orderId) => {
+
+  return await axios.post(
+    "/api/order/cancel",
+    {
+      orderId,
+    }
+  );
+}
+export const createMomoPaymentApi =
+  async (orderId, amount) => {
+
+    return await axios.post(
+      "/api/payment/momo",
+      {
+        orderId,
+        amount,
+      }
+    );
+  };
 export {
     createUserApi, loginApi, getUserApi
 }

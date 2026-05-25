@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useRef  } from "react";
 import {
     getProductsApi,
     getBestSellerApi,
@@ -18,9 +18,7 @@ const HomePage = () => {
 
     const [sort, setSort] = useState("");
     const [isSale, setIsSale] = useState("");
-
     const [page, setPage] = useState(1);
-
     const [totalPages, setTotalPages] =
         useState(1);
     const [bestSellerProducts,
@@ -28,7 +26,9 @@ const HomePage = () => {
 
     const [mostViewedProducts,
         setMostViewedProducts] = useState([]);
+    const sliderRef = useRef(null);
 
+    
     // CATEGORY LIST
     const categories = [
         ...new Set(
@@ -108,11 +108,31 @@ const HomePage = () => {
         return () => clearTimeout(delay);
 
     }, [keyword, category, sort, page, isSale]);
+    useEffect(() => {
+  const interval = setInterval(() => {
+    const container = sliderRef.current;
+    if (!container) return;
+
+    const scrollAmount = 270; // width card ~250 + gap
+
+    // nếu tới cuối thì quay lại đầu
+    if (
+      container.scrollLeft + container.clientWidth >=
+      container.scrollWidth
+    ) {
+      container.scrollTo({ left: 0, behavior: "smooth" });
+    } else {
+      container.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    }
+  }, 2000);
+
+  return () => clearInterval(interval);
+}, []);
 
     return (
-        <div className="max-w-7xl mx-auto px-6 py-12 space-y-8">
+        <div className="max-w-7xl mx-auto space-y-8">
 
-            <div className="pt-12">
+            <div space-x-4>
 
                 <input
                     type="text"
@@ -195,7 +215,8 @@ const HomePage = () => {
                     🔥 Sản phẩm bán chạy
                 </h2>
 
-                <div className="flex gap-6 overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-4">
+                <div className="flex gap-6 overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-4"
+                ref={sliderRef} >
 
                     {bestSellerProducts.map((item) => (
 
@@ -241,7 +262,8 @@ const HomePage = () => {
                     👀 Xem nhiều nhất
                 </h2>
 
-                <div className="flex gap-6 overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-4">
+                <div className="flex gap-6 overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-4"
+                ref={sliderRef}>
 
                     {mostViewedProducts.map((item) => (
 
